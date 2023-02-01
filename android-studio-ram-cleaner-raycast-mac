@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# Required parameters:
+# @raycast.schemaVersion 1
+# @raycast.title Fix Android Studio
+# @raycast.mode fullOutput
+
+# Optional parameters:
+# @raycast.icon 🤖
+# @raycast.packageName Developer Utils
+# @raycast.needsConfirmation true
+
+# Documentation:
+# @raycast.description Will stop all java processes created by Android Studio which are eating up my RAM
+
+echo "Starting process..."
+
+# Get all Android Studio Processes
+pids=($(pgrep -f "Android Studio"))
+
+# Remove first item, because that is Android Studio itself
+echo "Ignorning Android Studio (${pids[0]})"
+unset pids[0]
+
+# Kill all processes left in the pids list
+for pid in "${pids[@]}"
+do  
+    echo "Killing ${pid}..."
+    kill -9 $pid
+    echo "Killed ${pid}."
+done
+
+echo "Java processes killed."
+
+echo "Finished."
+
