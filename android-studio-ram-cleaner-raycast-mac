@@ -2,7 +2,7 @@
 
 # Required parameters:
 # @raycast.schemaVersion 1
-# @raycast.title Fix Android Studio
+# @raycast.title Fix Android Studio - Gradle Processes
 # @raycast.mode fullOutput
 
 # Optional parameters:
@@ -11,26 +11,13 @@
 # @raycast.needsConfirmation true
 
 # Documentation:
-# @raycast.description Will stop all java processes created by Android Studio which are eating up my RAM
+# @raycast.description Will stop all Gradle processes created by Android Studio
 
-echo "Starting process..."
+echo "Stopping all Gradle Processes created by Android Studio"
 
-# Get all Android Studio Processes
-pids=($(pgrep -f "Android Studio"))
+gradle --stop
 
-# Remove first item, because that is Android Studio itself
-echo "Ignorning Android Studio (${pids[0]})"
-unset pids[0]
+echo "Gradle processes stopped"
 
-# Kill all processes left in the pids list
-for pid in "${pids[@]}"
-do  
-    echo "Killing ${pid}..."
-    kill -9 $pid
-    echo "Killed ${pid}."
-done
 
-echo "Java processes killed."
-
-echo "Finished."
 
